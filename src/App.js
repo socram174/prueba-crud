@@ -41,6 +41,17 @@ const fetchForms = async ()=>{
   setFilteredData(forms);
 }
 
+const handleEdit =async (e)=>{
+  e.preventDefault();
+  const editedForm={"name":e.target[2].value,"code":e.target[1].value,"description":e.target[3].value}
+  console.log(editedForm);
+
+  const res = await fetch(`http://chatdoc.eastus.cloudapp.azure.com:8000/api/form/${e.target[0].value}`,{
+    "method":"PUT",
+    "headers":{"Content-Type":"application/json"},
+    "body":editedForm
+  });
+}
 
 
 
@@ -90,7 +101,7 @@ useEffect(()=>{
                       <td>{form.name}</td>
                       <td>{form.description}</td>
                       <td>
-                        <Button variant="primary">Edit</Button>
+                        <Button variant="primary" onClick={handleShow}>Edit</Button>
                         <Button variant="secondary" type="button" onClick={()=>{
 
                             console.log("Elminando:" + form.id);
